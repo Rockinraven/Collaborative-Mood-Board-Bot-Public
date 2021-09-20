@@ -7,6 +7,9 @@ const fs = require('fs');
 
 const prefix = '$';
 const errorChannel = "870340234540363807";	// for testing purposes
+const adminID = "473214825833431051";       // who to notify for errors
+const votingChannel = "889516710623862824";                   // will be set by db
+const galleryChannel = "889516733893840976";                  // will be set by db
 
 // set up the command reader
 client.commands = new Discord.Collection();
@@ -23,7 +26,7 @@ client.once('ready', () => {
 })
 
 //whenever a message is sent
-client.on('messageCreate', message => {
+client.on('message', message => {
 
 	//if starts with the proper prefix and or written by bot (do nothing)
 	if (!message.content.startsWith(prefix) || message.author.bot) {
@@ -41,7 +44,7 @@ client.on('messageCreate', message => {
 		try {
 			client.commands.get('commands').execute(message,Discord);
 		}catch (error) {
-			client.channels.cache.get(errorChannel).send(`<@!473214825833431051> there was an error when calling !${command}: ${error.message}`);
+			client.channels.cache.get(errorChannel).send(`<@!${adminID}> there was an error when calling !${command}: ${error.message}`);
 		};
 		
 	}
